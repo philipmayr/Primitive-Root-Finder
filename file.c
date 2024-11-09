@@ -95,8 +95,8 @@ int main()
             printf("%d ", * (prime_factors + index));
         }
             
-            printf("\n\n");
-        }
+        printf("\n\n");
+    }
     
     return 0;
 }
