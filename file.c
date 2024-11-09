@@ -13,9 +13,9 @@ int find_binary_logarithm(int number)
     return logarithm;
 }
 
-int * find_prime_factors(int number, int upper_bound)
+int * find_prime_factors(int number, int * upper_bound)
 {
-    int * prime_factors = malloc(sizeof (int) * upper_bound);
+    int * prime_factors = malloc(sizeof (int) * * upper_bound);
     
     int index = 0;
     
@@ -44,6 +44,8 @@ int * find_prime_factors(int number, int upper_bound)
     
     if (number > 2) prime_factors[index] = number;
     
+    * upper_bound = index;
+    
     return prime_factors;
 }
 
@@ -70,7 +72,7 @@ int main()
         
         int input, status, buffer;
 
-    	status = scanf("%d", &input);
+    	status = scanf("%d", & input);
     	
     	while (status != 1)
     	{
@@ -80,20 +82,17 @@ int main()
             printf("\n\n");
             printf("Enter a number to find its prime factors: ");
             
-            status = scanf("%d", &input);
+            status = scanf("%d", & input);
     	}
     
     	int number = input;
     
         int upper_bound = find_binary_logarithm(number);
         
-        int * prime_factors = find_prime_factors(number, upper_bound);
+        int * prime_factors = find_prime_factors(number, & upper_bound);
         
         for (int index = 0; index < upper_bound; index++)
-        {
-            if (* (prime_factors + index) == 0) break;
             printf("%d ", * (prime_factors + index));
-        }
             
         printf("\n\n");
     }
