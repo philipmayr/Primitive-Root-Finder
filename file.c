@@ -90,8 +90,10 @@ int main()
         int upper_bound = find_binary_logarithm(number);
         
         int * prime_factors = find_prime_factors(number, & upper_bound);
+       
+        printf("%d ", * (prime_factors));
         
-        for (int index = 0; index < upper_bound; index++)
+        for (int index = 1; index < upper_bound; index++)
             printf("%d ", * (prime_factors + index));
             
         printf("\n\n");
