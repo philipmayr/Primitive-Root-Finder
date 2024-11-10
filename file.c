@@ -65,19 +65,52 @@ int * find_prime_factors(int number, int * upper_bound)
     return prime_factors;
 }
 
-int find_primitive_root(int prime_modulus)
+int exponentiate_modularly(int base, int index, int modulus)
 {
-    if (prime_modulus == 2) return 1;
+    int residue = 1;
+    
+    base %= modulus;
+    
+    if (base == 0) return 0;
+    
+    while (index)
+    {
+        if (index & 1) residue = (residue * base) % modulus;
+        
+        base = (base * base) % modulus;
+
+        index >>= 1;
+    }
+    
+    return residue;    
+}
+
+int find_least_primitive_root(int number)
+{
+    if (number == 2) return 1;
     
     // primitive root α
     int primitive_root = 2;
     
-    int prime_modulus_less_one = prime_modulus - 1;
+    int number_less_one = number - 1;
     
     // number of primitive roots of n is equal to phi(phi(n))
-    int number_of_primitive_roots = find_totient(find_totient(prime_modulus_less_one));
+    int number_of_primitive_roots = find_totient(find_totient(number_less_one));
     
     int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
+    
+    int upper_bound = find_binary_logarithm(number);
+        
+    int * prime_factors = find_prime_factors(number, & upper_bound);
+    
+    for (int a = 2; a < number_of_primitive_roots; a++)
+    {
+        for (int i = 0; i < upper_bound; i++)
+        {
+            if (exponentiate_modularly(a, number_less_one / * (prime_factors + i), number) == 1) break;
+            else if (i == upper_bound - 1) return a;
+        }
+    }
     
     return primitive_root;
 }
@@ -116,6 +149,8 @@ int main()
         
         for (int index = 1; index < upper_bound; index++)
             printf("%d ", * (prime_factors + index));
+            
+        printf("\n%d\n", find_least_primitive_root(number));
             
         printf("\n\n");
     }
