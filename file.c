@@ -56,11 +56,11 @@ int find_primitive_root(int prime_modulus)
     // primitive root α
     int primitive_root = 2;
     
-    int prime_modulus_less_one = prime_modulus - 1
+    int prime_modulus_less_one = prime_modulus - 1;
     
     // TODO 
     
-    return primitive_root
+    return primitive_root;
 }
 
 int main()
