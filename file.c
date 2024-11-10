@@ -54,11 +54,13 @@ int find_primitive_root(int prime_modulus)
     if (prime_modulus == 2) return 1;
     
     // primitive root α
-    int α = 2;
+    int primitive_root = 2;
     
-    int prime_modulus_less_one = prime_modulus - 1;
+    int prime_modulus_less_one = prime_modulus - 1
     
+    // TODO 
     
+    return primitive_root
 }
 
 int main()
