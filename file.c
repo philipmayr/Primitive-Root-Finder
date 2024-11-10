@@ -4,6 +4,22 @@
 #include <stdio.h>
 #include <math.h>
 
+int find_greatest_common_divisor(int a, int b)
+{
+    return b ? find_greatest_common_divisor(b, a % b) : a;
+}
+
+int find_totient(int number)
+{
+    int totient = 1;
+    
+    for (int index = 2; index < number; index++)
+        if (find_greatest_common_divisor(index, totient) == 1)
+            totient++;
+            
+    return totient;
+}
+
 int find_binary_logarithm(int number)
 {
     int logarithm = 1;
@@ -58,7 +74,10 @@ int find_primitive_root(int prime_modulus)
     
     int prime_modulus_less_one = prime_modulus - 1;
     
-    // TODO 
+    // number of primitive roots of n is equal to phi(phi(n))
+    int number_of_primitive_roots = find_totient(find_totient(prime_modulus_less_one));
+    
+    int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
     
     return primitive_root;
 }
