@@ -29,6 +29,47 @@ int find_binary_logarithm(int number)
     return logarithm;
 }
 
+void find_distinct_prime_factor(int number)
+{
+    // int * prime_factors = malloc(sizeof (int) * ?);
+    
+    int index = 0;
+    
+    if (~number & 1)
+    {
+        // prime_factors[index] = 2;
+        
+        printf("%d ", 2);
+        
+        index++;
+        
+        do number >>= 1; while (~number & 1);
+    }
+    
+    for (int factor_candidate = 3; factor_candidate <= sqrt(number); factor_candidate += 2)
+    {
+        if (number % factor_candidate == 0) 
+        {
+            // prime_factors[index] == factor_candidate;
+            
+            printf("%d ", factor_candidate);
+            
+            index++;
+            
+            do number /= factor_candidate; while (number % factor_candidate == 0);
+        }
+    }
+    
+    if (number > 2)
+    {
+        // prime_factors[index] = number;
+    
+        printf("%d", number);
+    }
+    
+    return;
+}
+
 int * find_prime_factors(int number, int * upper_bound)
 {
     int * prime_factors = malloc(sizeof (int) * * upper_bound);
@@ -152,6 +193,10 @@ int main()
             if (* (prime_factors + index) == 0) break;
             printf("%d ", * (prime_factors + index));
         }
+        
+        printf("\n\n");
+        
+        find_distinct_prime_factor(number);
             
         // printf("\n%d\n", find_least_primitive_root(number));
             
