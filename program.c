@@ -29,17 +29,15 @@ int find_binary_logarithm(int number)
     return logarithm;
 }
 
-void find_distinct_prime_factor(int number)
+int * find_distinct_prime_factors(int number, int * upper_bound)
 {
-    // int * prime_factors = malloc(sizeof (int) * ?);
+    int * distinct_prime_factors = malloc(sizeof (int) * * upper_bound);
     
     int index = 0;
     
     if (~number & 1)
     {
-        // prime_factors[index] = 2;
-        
-        printf("%d ", 2);
+        distinct_prime_factors[index] = 2;
         
         index++;
         
@@ -50,24 +48,26 @@ void find_distinct_prime_factor(int number)
     {
         if (number % factor_candidate == 0) 
         {
-            // prime_factors[index] == factor_candidate;
+            int factor = factor_candidate;
             
-            printf("%d ", factor_candidate);
+            distinct_prime_factors[index] = factor;
             
             index++;
             
-            do number /= factor_candidate; while (number % factor_candidate == 0);
+            do number /= factor; while (number % factor == 0);
         }
     }
     
     if (number > 2)
     {
-        // prime_factors[index] = number;
+        distinct_prime_factors[index] = number;
     
-        printf("%d", number);
+        index++;
     }
     
-    return;
+    * upper_bound = index;
+    
+    return distinct_prime_factors;
 }
 
 int * find_prime_factors(int number, int * upper_bound)
@@ -140,15 +140,15 @@ int find_least_primitive_root(int number)
     
     int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
     
-    int upper_bound = find_binary_logarithm(number);
+    int upper_bound = log(number) / log(log(number));
         
-    int * prime_factors = find_prime_factors(number, & upper_bound);
+    int * distinct_prime_factors = find_distinct_prime_factors(number, & upper_bound);
     
     for (int a = 2; a < number_of_primitive_roots; a++)
     {
         for (int i = 0; i < upper_bound; i++)
         {
-            if (exponentiate_modularly(a, number_less_one / * (prime_factors + i), number) == 1) break;
+            if (exponentiate_modularly(a, number_less_one / * (distinct_prime_factors + i), number) == 1) break;
             else if (i == upper_bound - 1) return a;
         }
     }
@@ -182,12 +182,12 @@ int main()
     
     	int number = input;
     
-        int upper_bound = find_binary_logarithm(number);
+        int upper_bound;
+        
+        upper_bound = find_binary_logarithm(number);
         
         int * prime_factors = find_prime_factors(number, & upper_bound);
        
-        // printf("%d ", * (prime_factors));
-        
         for (int index = 0; index < find_binary_logarithm(number); index++)
         {
             if (* (prime_factors + index) == 0) break;
@@ -196,9 +196,19 @@ int main()
         
         printf("\n\n");
         
-        find_distinct_prime_factor(number);
+        upper_bound = log(number) / log(log(number));
+        
+        int * distinct_prime_factors = find_distinct_prime_factors(number, & upper_bound);
+        
+        for (int index = 0; index < upper_bound; index++)
+        {
+            if (* (distinct_prime_factors + index) == 0) break;
+            printf("%d ", * (distinct_prime_factors + index));
+        }
+        
+        printf("\n\n");
             
-        // printf("\n%d\n", find_least_primitive_root(number));
+        printf("%d", find_least_primitive_root(number));
             
         printf("\n\n");
     }
