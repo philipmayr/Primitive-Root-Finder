@@ -145,12 +145,15 @@ int main()
         
         int * prime_factors = find_prime_factors(number, & upper_bound);
        
-        printf("%d ", * (prime_factors));
+        // printf("%d ", * (prime_factors));
         
-        for (int index = 1; index < upper_bound; index++)
+        for (int index = 0; index < find_binary_logarithm(number); index++)
+        {
+            if (* (prime_factors + index) == 0) break;
             printf("%d ", * (prime_factors + index));
+        }
             
-        printf("\n%d\n", find_least_primitive_root(number));
+        // printf("\n%d\n", find_least_primitive_root(number));
             
         printf("\n\n");
     }
