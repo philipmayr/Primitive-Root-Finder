@@ -14,7 +14,7 @@ int find_totient(int number)
     int totient = 1;
     
     for (int index = 2; index < number; index++)
-        if (find_greatest_common_divisor(index, totient) == 1)
+        if (find_greatest_common_divisor(index, number) == 1)
             totient++;
             
     return totient;
@@ -95,7 +95,7 @@ int find_least_primitive_root(int number)
     int number_less_one = number - 1;
     
     // number of primitive roots of n is equal to phi(phi(n))
-    int number_of_primitive_roots = find_totient(find_totient(number_less_one));
+    int number_of_primitive_roots = find_totient(find_totient(number));
     
     int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
     
