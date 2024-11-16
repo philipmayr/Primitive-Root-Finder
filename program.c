@@ -181,6 +181,10 @@ int main()
     	}
     
     	int number = input;
+    	
+    	printf("\n");
+    	
+    	printf("Prime factors of %d: ", number);
     
         int upper_bound;
         
@@ -196,6 +200,8 @@ int main()
         
         printf("\n\n");
         
+        printf("Distinct prime factors of %d: ", number);
+        
         upper_bound = log(number) / log(log(number));
         
         int * distinct_prime_factors = find_distinct_prime_factors(number, & upper_bound);
@@ -206,9 +212,9 @@ int main()
             printf("%d ", * (distinct_prime_factors + index));
         }
         
-        printf("\n\n");
+        // printf("\n\n");
             
-        printf("%d", find_least_primitive_root(number));
+        // printf("Least primitive root of %d: %d", number, find_least_primitive_root(number));
             
         printf("\n\n");
     }
