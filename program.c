@@ -152,7 +152,6 @@ int find_least_primitive_root(int prime_number)
         if (exponentiate_modularly(primitive_root, exponent, prime_number) == 1)
         {
             primitive_root++;
-            index = 0;
             goto iterate_over_distinct_prime_factors;
         }
         else if (index == number_of_primitive_roots - 1)
@@ -161,7 +160,7 @@ int find_least_primitive_root(int prime_number)
         }
     }
     
-    return -1;
+    return primitive_root;
 }
 
 int main()
