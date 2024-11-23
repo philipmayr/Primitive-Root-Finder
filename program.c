@@ -126,34 +126,42 @@ int exponentiate_modularly(int base, int index, int modulus)
     return residue;    
 }
 
-int find_least_primitive_root(int number)
+int find_least_primitive_root(int prime_number)
 {
-    if (number == 2) return 1;
+    if (prime_number == 2) return 1;
     
     // primitive root α
     int primitive_root = 2;
     
-    int number_less_one = number - 1;
+    int prime_number_less_one = prime_number - 1;
     
     // number of primitive roots of n is equal to phi(phi(n))
-    int number_of_primitive_roots = find_totient(find_totient(number));
+    int number_of_primitive_roots = find_totient(find_totient(prime_number));
     
     int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
     
-    int upper_bound = log(number) / log(log(number));
+    int upper_bound = log(prime_number) / log(log(prime_number));
         
-    int * distinct_prime_factors = find_distinct_prime_factors(number, & upper_bound);
+    int * distinct_prime_factors = find_distinct_prime_factors(prime_number, & upper_bound);
     
-    for (int a = 2; a < number_of_primitive_roots; a++)
+    iterate_over_distinct_prime_factors:
+    for (int index = 0; index < upper_bound; index++)
     {
-        for (int i = 0; i < upper_bound; i++)
+        int exponent = (prime_number_less_one) / (* (distinct_prime_factors + index));
+        
+        if (exponentiate_modularly(primitive_root, exponent, prime_number) == 1)
         {
-            if (exponentiate_modularly(a, number_less_one / * (distinct_prime_factors + i), number) == 1) break;
-            else if (i == upper_bound - 1) return a;
+            primitive_root++;
+            index = 0;
+            goto iterate_over_distinct_prime_factors;
+        }
+        else if (index == number_of_primitive_roots - 1)
+        {
+            return primitive_root;
         }
     }
     
-    return primitive_root;
+    return -1;
 }
 
 int main()
@@ -212,9 +220,9 @@ int main()
             printf("%d ", * (distinct_prime_factors + index));
         }
         
-        // printf("\n\n");
+        printf("\n\n");
             
-        // printf("Least primitive root of %d: %d", number, find_least_primitive_root(number));
+        printf("Least primitive root of %d: %d", number, find_least_primitive_root(number));
             
         printf("\n\n");
     }
