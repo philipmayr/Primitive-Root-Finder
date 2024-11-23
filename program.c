@@ -140,9 +140,9 @@ int find_least_primitive_root(int prime_number)
     
     int * primitive_roots = malloc(sizeof (int) * number_of_primitive_roots);
     
-    int upper_bound = log(prime_number) / log(log(prime_number));
+    int upper_bound = log(prime_number) / log(log(prime_number_less_one));
         
-    int * distinct_prime_factors = find_distinct_prime_factors(prime_number, & upper_bound);
+    int * distinct_prime_factors = find_distinct_prime_factors(prime_number_less_one, & upper_bound);
     
     iterate_over_distinct_prime_factors:
     for (int index = 0; index < upper_bound; index++)
